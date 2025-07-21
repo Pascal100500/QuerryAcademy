@@ -1,35 +1,48 @@
-ï»¿CREATE TABLE Employees (
-    ID INT PRIMARY KEY IDENTITY(1,1), --IDENTITY Ð”Ð»Ñ ÑƒÐ²ÐµÐ»Ð¸Ñ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾Ñ€ÑÐ´ÐºÐ° Ð¸ÑÑ‡Ð¸ÑÐ»ÐµÐ½Ð¸Ñ Ð½Ð° 1 Ð¸ Ð½Ð°Ñ‡Ð°Ð»Ð° Ð½Ð¾Ð²Ð¾Ð¹ ÑÑ‚Ñ€Ð¾ÐºÐ¸
-    Name NVARCHAR(100) NOT NULL,
-    Salary DECIMAL(10, 2) NOT NULL,
-    Department NVARCHAR(100) NOT NULL
+CREATE TABLE sales (
+ id INT PRIMARY KEY,
+ product_name VARCHAR(50),
+ category VARCHAR(30),
+ price DECIMAL(10, 2),
+ quantity INT,
+ sale_date DATE
 );
---*****************************************
-INSERT INTO Employees (Name, Salary, Department) VALUES
-('Ð˜Ð²Ð°Ð½ ÐŸÐµÑ‚Ñ€Ð¾Ð²', 75000.00, 'IT'),
-('ÐÐ»ÐµÐºÑÐµÐ¹ Ð¡Ð¼Ð¸Ñ€Ð½Ð¾Ð²', 60000.00, 'ÐœÐ°Ñ€ÐºÐµÑ‚Ð¸Ð½Ð³'),
-('ÐœÐ°Ñ€Ð¸Ñ Ð˜Ð²Ð°Ð½Ð¾Ð²Ð°', 55000.00, 'HR'),
-('Ð”Ð¼Ð¸Ñ‚Ñ€Ð¸Ð¹ ÐšÑƒÐ·Ð½ÐµÑ†Ð¾Ð²', 80000.00, 'IT'),
-('ÐÐ½Ð½Ð° Ð¡Ð¾ÐºÐ¾Ð»Ð¾Ð²Ð°', 48000.00, 'Ð¤Ð¸Ð½Ð°Ð½ÑÑ‹'),
-('Ð¡ÐµÑ€Ð³ÐµÐ¹ Ð’Ð°ÑÐ¸Ð»ÑŒÐµÐ²', 65000.00, 'IT'),
-('ÐžÐ»ÑŒÐ³Ð° ÐœÐ¾Ñ€Ð¾Ð·Ð¾Ð²Ð°', 52000.00, 'HR'),
-('ÐÐ»ÐµÐºÑÐ°Ð½Ð´Ñ€ Ð‘ÐµÐ»Ð¾Ð²', 90000.00, 'ÐœÐ°Ñ€ÐºÐµÑ‚Ð¸Ð½Ð³'),
-('Ð•ÐºÐ°Ñ‚ÐµÑ€Ð¸Ð½Ð° ÐšÐ¾Ð·Ð»Ð¾Ð²Ð°', 43000.00, 'Ð¤Ð¸Ð½Ð°Ð½ÑÑ‹'),
-('ÐŸÐ°Ð²ÐµÐ» ÐÐ¾Ð²Ð¸ÐºÐ¾Ð²', 70000.00, 'IT');
---*****************************************
-SELECT * FROM Employees;
---*****************************************
-SELECT Name, Salary
-FROM Employees;
---*****************************************
-SELECT Name, Salary
-FROM Employees
-WHERE Salary > 5000;
---*****************************************
-SELECT Name, Salary
-FROM Employees
-ORDER BY Salary DESC;
---*****************************************
-SELECT TOP (3) Name, Salary
-FROM Employees
-ORDER BY Salary DESC;
+
+--*******************************************--
+
+INSERT INTO sales (id, product_name, category, price, quantity, sale_date) VALUES
+(1, 'Íîóòáóê', 'Ýëåêòðîíèêà', 75000.00, 2, '2024-01-15'),
+(2, 'Ñìàðòôîí', 'Ýëåêòðîíèêà', 45000.00, 5, '2024-01-16'),
+(3, 'Êîôåìàøèíà', 'Áûòîâàÿ òåõíèêà', 32000.00, 1, '2024-01-17'),
+(4, 'Íàóøíèêè', 'Ýëåêòðîíèêà', 8000.00, 10, '2024-01-18'),
+(5, 'Ìèêðîâîëíîâêà', 'Áûòîâàÿ òåõíèêà', 15000.00, 3, '2024-01-19'),
+(6, 'Ôóòáîëêà', 'Îäåæäà', 2000.00, 15, '2024-01-20'),
+(7, 'Êðîññîâêè', 'Îäåæäà', 5000.00, 8, '2024-01-21'),
+(8, '×àéíèê', 'Áûòîâàÿ òåõíèêà', 4000.00, 7, '2024-01-22'),
+(9, 'Ìîíèòîð', 'Ýëåêòðîíèêà', 25000.00, 4, '2024-01-23'),
+(10, 'Äæèíñû', 'Îäåæäà', 3500.00, 12, '2024-01-24');
+
+--*******************************************--
+
+SELECT category, SUM(price * quantity) AS total_revenue
+FROM sales
+GROUP BY category;
+
+--*******************************************--
+
+SELECT category, AVG(price * quantity) AS avg_sale
+FROM sales
+GROUP BY category;
+
+--*******************************************--
+
+SELECT category, SUM(price * quantity) AS total_revenue
+FROM sales
+GROUP BY category
+HAVING SUM(price * quantity) > 100000;
+
+--*******************************************--
+
+SELECT sale_date, SUM(quantity) AS total_quantity
+FROM sales
+GROUP BY sale_date
+HAVING SUM(quantity) > 5;
